@@ -3,7 +3,7 @@ create table rental_house
 (
   id               Int(20) AUTO_INCREMENT NOT NULL PRIMARY KEY,
   title            NVARCHAR(255)          NOT NULL,
-  description      NVARCHAR(255)          NOT NULL,
+  description      TEXT NOT NULL,
   status           BOOLEAN,
   post_date        NVARCHAR(255),
   price            BIGINT,

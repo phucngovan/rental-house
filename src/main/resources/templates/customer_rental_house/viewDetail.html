@@ -2,83 +2,76 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" th:href="@{/css/theme.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>News Rent</title>
+    <script>
+        $(document).ready(function () {
+            var price = [[${house.price}]];
+            $("#price_order").val(price);
+        })
+    </script>
 </head>
 <body>
-<div class="bg-overlay">
-    <div class="navbar navbar-expand-sm">
-        <a class="navbar-brand" href="#">
-            <img th:src="@{/css/dota2button.jpg}" class="picture">
-        </a>
-        <div class="collapse navbar-collapse" id="collapsibleNavId">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active main-content">
-                    <button class="btn btn-outline-light" data-toggle="modal" data-target=".mode">Log in</button>
-                    <div class="mode fade modal">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                </div>
-                                <div class="modal-body" style="color: deeppink">
-                                    <form th:action="@{/login}" method="POST">
-                                        <input type="text" name="username" placeholder="Your username" /><br />
-                                        <input type="password" name="password" placeholder="Your password" /><br />
-                                        <button type="submit">Login</button> <br />
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-info" data-dismiss="modal">&times;</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"> Sign Up </a>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        </div>
-    </div>
-    <br>
-    <br>
-    <div class="container">
-        <h1>My new rent</h1>
-    </div>
-    <br>
-    <br>
-    <br>
-    <div class="container">
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container">
+    <div>
         <form th:object="${house}">
             <input th:type="hidden" name="id" th:field="*{id}">
             <table>
                 <tr>
                     <td>Title:</td>
-                   <td th:text="${house.title}"></td>
-                </tr>
-                <tr>
-                    <td>Price:</td>
-                    <td th:text="${house.price}"></td>
+                    <td th:utext="${house.title}"></td>
                 </tr>
                 <tr>
                     <td>Address:</td>
-                    <td th:text="${house.address}"></td>
+                    <td th:utext="${house.address}"></td>
                 </tr>
                 <tr>
                     <td>Description</td>
-                    <td th:text="${house.description}"></td>
+                    <td th:utext="${house.description}"></td>
+                </tr>
+                <tr>
+                    <td>Price:</td>
+                    <td><span id="price" th:value="${house.price}" th:utext="${house.price} + ${'VND'}"></span></td>
                 </tr>
             </table>
         </form>
     </div>
+
+    <div>
+        <form class="form-horizontal" action="/order/action" role="form" method="post">
+            <div class="form-group">
+                <label for="start-date" class="col-sm-2 control-label">Start-date</label>
+                <div class="col-sm-4">
+                    <input type="date" class="form-control" id="start-date" placeholder="Start date">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="and-date" class="col-sm-2 control-label">And-date</label>
+                <div class="col-sm-4">
+                    <input type="date" class="form-control" id="and-date">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="price_order" class="col-sm-2 control-label">Total-price</label>
+                <div class="col-sm-4">
+                    <input type="text" id="price_order" class="form-control" readonly>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default " style="background: royalblue">Submit</button>
+                    <button type="submit" class="btn btn-default " style="background: red">Cencel</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

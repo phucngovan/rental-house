@@ -12,11 +12,11 @@
 </head>
 <br>
 <div class="container">
-    <h2 th:text="${postRent.title}"></h2>
-    Category: <a th:href="@{/post/__${postRent.category.getName()}__}" th:text="${postRent.category.getName()}"></a><br>
-    User: <a th:href="@{/__${postRent.user.getUsername()}__}" th:text="${postRent.user.getUsername()}"></a><br>
+    <h2 th:utext="${postRent.title}"></h2>
+    Category: <a th:href="@{/post/__${postRent.category.getName()}__}" th:utext="${postRent.category.getName()}"></a><br>
+    User: <a th:href="@{/__${postRent.user.getUsername()}__}" th:utext="${postRent.user.getUsername()}"></a><br>
 
-    <p th:text="${postRent.description}"></p>
+    <div th:utext="${postRent.description}"></div>
 </div>
 
 </body>

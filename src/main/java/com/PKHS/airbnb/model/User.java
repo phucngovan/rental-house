@@ -15,6 +15,9 @@ public class User implements Serializable {
     @OneToMany(targetEntity = RentalHouse.class)
     private List<RentalHouse> posts;
 
+    @OneToMany(targetEntity = Order.class)
+    private List<Order> orders;
+
     @ManyToMany
     @JoinTable(
             name = "user_role",

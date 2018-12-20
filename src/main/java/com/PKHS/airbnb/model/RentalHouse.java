@@ -17,6 +17,9 @@ public class RentalHouse {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(targetEntity = Order.class)
+    private List<Order> orders;
+
     @OneToMany(targetEntity = Image.class)
     private List<Image> images;
 
@@ -163,5 +166,13 @@ public class RentalHouse {
 
     public void setHouse_area(int house_area) {
         this.house_area = house_area;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

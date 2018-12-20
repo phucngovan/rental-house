@@ -17,51 +17,9 @@
     <title>News Rent</title>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
+
 <div class="container" style="height: auto">
-    <header class="row">
-
-    </header>
-
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span> Trang chủ</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#"><span class="glyphicon glyphicon-list-alt"></span> Giới thiệu <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-earphone"></span> Liên hệ</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-envelope"></span> Góp ý</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-question-sign"></span> Hỏi đáp</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Tài khoản <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Đăng nhập</a></li>
-                            <li><a href="#">Quên mật khẩu</a></li>
-                            <li><a href="#">Đăng kí thành viên</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Đăng xuất</a></li>
-                            <li><a href="#">Đổi mật khẩu</a></li>
-                            <li><a href="#">Cập nhập hồ sơ</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Tin đã đăng</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
-
-
     <div class = "row">
         <article class="col-sm-9">
                 <div class="news " th:each="house: ${houses}" style="height: auto">
@@ -112,106 +70,7 @@
             <a th:href="@{'/house'(page=${houses.number + 1})}" th:if="${houses.hasNext()}">Next</a>
         </div>
     </div>
-
-    <footer class="panel panel-default">
-        <div class="row">
-            <!-- Grid column -->
-            <div class="col-md-3 mx-auto">
-
-                <!-- Links -->
-                <h5 class="font-weight-bold text-uppercase mt-3 mb-4">Liên kết</h5>
-
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="#!">Facebook</a>
-                    </li>
-                    <li>
-                        <a href="#!">Google+</a>
-                    </li>
-                    <li>
-                        <a href="#!">Youtube</a>
-                    </li>
-                </ul>
-
-            </div>
-            <!-- Grid column -->
-
-            <!-- Grid column -->
-            <div class="col-md-3 mx-auto">
-
-                <!-- Links -->
-                <h5 class="font-weight-bold text-uppercase mt-3 mb-4">Bản di động</h5>
-
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="#!">Very long link 1</a>
-                    </li>
-                    <li>
-                        <a href="#!">Very long link 2</a>
-                    </li>
-                    <li>
-                        <a href="#!">Very long link 3</a>
-                    </li>
-                    <li>
-                        <a href="#!">Very long link 4</a>
-                    </li>
-                </ul>
-
-            </div>
-            <!-- Grid column -->
-
-            <!-- Grid column -->
-            <div class="col-md-3 mx-auto">
-
-                <!-- Links -->
-                <h5 class="font-weight-bold text-uppercase mt-3 mb-4">Hỗ trợ khách hàng</h5>
-
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="#!">Trung tâm trợ giúp</a>
-                    </li>
-                    <li>
-                        <a href="#!">An toàn mua bán</a>
-                    </li>
-                    <li>
-                        <a href="#!">Quy định cần thiết</a>
-                    </li>
-                    <li>
-                        <a href="#!">Liên kết hỗ trợ</a>
-                    </li>
-                </ul>
-
-            </div>
-            <!-- Grid column -->
-
-            <!-- Grid column -->
-            <div class="col-md-3 mx-auto">
-
-                <!-- Links -->
-                <h5 class="font-weight-bold text-uppercase mt-3 mb-4">Về Air.bnb(25PKHS)</h5>
-
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="#!">Giới thiệu</a>
-                    </li>
-                    <li>
-                        <a href="#!">Tuyển dụng</a>
-                    </li>
-                    <li>
-                        <a href="#!">Truyền thông</a>
-                    </li>
-                    <li>
-                        <a href="#!">Blog</a>
-                    </li>
-                </ul>
-
-            </div>
-            <!-- Grid column -->
-        </div>
-        <div class = "panel-heading text-center">
-            <p>CodeGym &copy; 2017</p>
-        </div>
-    </footer>
 </div>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

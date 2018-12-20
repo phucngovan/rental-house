@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>RESGISTER</title>
+    <title>REGISTER <ACCOUNT></ACCOUNT></title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <!-- Optional theme -->
@@ -11,7 +11,7 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h1 class="text-center">Add User</h1>
+<h1 class="text-center">Register Account</h1>
 <th:block th:if="${message}">
     <h2 th:text="${message}"></h2>
 </th:block>
@@ -32,7 +32,7 @@
             </tr>
             <tr>
                 <td>Age:</td>
-                <td><input class="form-control" type="text" th:field="*{age}"></td>
+                <td><input class="form-control" type="number" th:field="*{age}"></td>
             </tr>
             <tr>
                 <td>Phone:</td>
