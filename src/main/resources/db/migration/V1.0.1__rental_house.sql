@@ -51,3 +51,14 @@ create table user
   gender   BOOLEAN
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+create table order_detail(
+  id INT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  price BIGINT DEFAULT 0,
+  date_begin NVARCHAR(255),
+  date_end NVARCHAR(255),
+  username NVARCHAR(255),
+  rental_house_id INT(20),
+  FOREIGN KEY (username) REFERENCES user(username),
+  FOREIGN KEY (rental_house_id) REFERENCES rental_house(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -24,12 +24,6 @@ import java.util.List;
 @Controller
 public class LoginController {
 
-    @GetMapping("/login")
-    public String login(Model model) {
-        model.addAttribute("user", new User());
-        return "home/login";
-    }
-
     @GetMapping("/test")
     public String test(Model model) {
         UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().

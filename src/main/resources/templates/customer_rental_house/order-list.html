@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order list</title>
+</head>
+<body>
+<div class="container">
+    <table class="table">
+        <tr style="font-weight: bold">
+            <td>Ma don hang</td>
+            <td>Content</td>
+            <td>Xem chi tiet</td>
+        </tr>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.rental_house_id.title}"></td>
+            <td><a th:href="@{/order_detail/__${order.id}__}">Xem Chi Tiet</a></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

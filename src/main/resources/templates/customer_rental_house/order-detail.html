@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <table class="table">
+        <tr>
+            <td>Home</td>
+            <td>Date begin</td>
+            <td>Date end</td>
+            <td>Price</td>
+            <td>username</td>
+        </tr>
+        <tr>
+            <td><a th:href="@{/house/detail/__${order.rental_house_id.id}__}"><span th:text="${order.rental_house_id.title}"></span></a></td>
+            <td th:text="${order.date_begin}"></td>
+            <td th:text="${order.date_end}"></td>
+            <td th:text="${order.price}"></td>
+            <td th:text="${order.user_id}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

@@ -50,6 +50,35 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
+    <div class="mode fade modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                </div>
+                <div class="modal-body" style="color: deeppink">
+                    <form th:action="@{/}" method="POST">
+                        <div class="form-group">
+                            <label for="username">User name:</label>
+                            <input class="form-control" type="text" id="username" name="username" placeholder="Your username" />
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Password:</label>
+                            <input class="form-control" type="password" name="password" placeholder="Your password" id="pwd" />
+                        </div>
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox"> Remember me
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button> <br />
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info" data-dismiss="modal">&times;</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </header>
 </body>
 </html>
