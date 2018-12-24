@@ -17,4 +17,6 @@ public interface UserService {
     Page<User> findByName(String name, Pageable pageable);
 
     Iterable<User> findAll();
+
+    User findByUsername(String name);
 }

@@ -65,10 +65,12 @@ public class CustomerRentalHouseController extends GetIdUserController{
         return "redirect:/order/my_order";
     }
 
-    @PostMapping("/house/comment")
-    public String createComment(@ModelAttribute("cm") Comment comment) {
+    @PostMapping("/house/{id}/comment")
+    public String createComment(@PathVariable("id") int id, @ModelAttribute("myName") int idn, @ModelAttribute("cm") Comment comment) {
+        comment.setUser(this.userService.findById(idn));
+        comment.setRentalHouse(this.customerRentalHouseService.findById(id));
         this.commentService.save(comment);
-        return "redirect:/house";
+        return "redirect:/house/detail/{id}";
     }
 
 

@@ -109,4 +109,10 @@ public class UserController extends GetIdUserController{
         model.addAttribute("user", user);
         return "user/view";
     }
+    @GetMapping("/{username}")
+    public String userDetailNoId(@PathVariable("username") String name, Model model) {
+        User user = this.userService.findByUsername(name);
+        model.addAttribute("user", user);
+        return "user/view";
+    }
 }

@@ -57,9 +57,15 @@
 </head>
 <body class="container">
 <div th:replace="fragments/header :: header"></div>
-<div th:object="${house}">
+<th:block th:object="${house}">
     <div class="container">
-        <div class="col-md-12"><h1 style="text-align: center" th:utext="${house.title}"></h1></div>
+        <div class="col-md-12"><h1 style="text-align: center" th:utext="${house.title}"></h1>
+            <th:block th:if="${#request.userPrincipal}">
+            <div th:if="${house.user.username} == ${#request.userPrincipal.getName()}">
+                <a th:href="@{/post/edit-post-rent/__${house.id}__}">Edit Post Rental House</a>
+            </div>
+            </th:block>
+        </div>
         <div class="col-md-12">Chủ thuê: <a th:href="@{/user/__${house.user.id}__/__${house.user.username}__}" th:text="${house.user.username}"></a></div>
         <div th:if="${house.images.size()} > 0" class="col-md-12" style="height: 400px">
             <div id="myCarousel" class="carousel slide" data-interval="3000" data-ride="carousel">
@@ -176,12 +182,11 @@
         </div>
     </div>
 
-</div>
 <hr>
 <div class="container">
-    <div class="col-lg-9 col-sm-6 text-center">
+    <div class="col-lg-9 col-sm-6 text-center" th:if="${#request.userPrincipal}" >
         <h4>Comment</h4>
-        <form th:action="@{/house/comment}" method="post" role="form" th:object="${cm}">
+        <form th:action="@{/house/__${house.id}__/comment}" method="post" role="form" th:object="${cm}">
             <div class="form-group">
                 <textarea th:field="*{body}" rows="5" class="form-control input-sm chat-input" placeholder="Write your message here..."></textarea>
             </div>
@@ -196,12 +201,14 @@
     <div class="col-md-6">
         <h2>Comments:</h2>
         <!--Comments-->
-        <div class="well" th:each="comment: ${comments}">
+        <div class="well" th:each="comment: ${comments}" th:if="${house.id} == ${comment.rentalHouse.id}">
+            <a th:if="${comment.user.username}" th:href="@{/user/__${comment.user.username}__}" th:text="${comment.user.username}"></a>
             <p th:text="${comment.body}"></p>
-            <p th:if="${#request.userPrincipal}" th:text="${#request.userPrincipal.getName()}"></p>
         </div>
     </div>
 </div>
+
+</th:block>
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

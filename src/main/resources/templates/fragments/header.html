@@ -86,6 +86,15 @@
                             <li role="separator" class="divider"></li>
                         </ul>
                     </li>
+                    <li></li>
+                    <li th:if="${#request.userPrincipal}">
+                        <a type="button" class="btn btn-warning" th:href="@{/post/add-post-rent}">
+                            ĐĂNG TIN
+                        </a>
+                    </li>
+                    <li th:if="${#request.userPrincipal} == null" >
+                        <button class="btn btn-warning" data-toggle="modal" data-target=".mode">ĐĂNG TIN</button>
+                    </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

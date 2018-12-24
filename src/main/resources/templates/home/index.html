@@ -250,7 +250,7 @@
             </a>
             <div><a th:href="@{/house/detail/__${rental_house.id}__}">
                 <h4 class="c-heading" th:text="${rental_house.title}"></h4></a></div>
-            <button class="btn btn-info" style="color: white; font-weight: bold" th:utext="${'<b>Price:</b> '} + ${rental_house.price} + ${' VND/day'}"></button>
+            <a type="button" th:href="@{/house/detail/__${rental_house.id}__}" class="btn btn-info" style="color: white; font-weight: bold" th:utext="${'<b>Price:</b> '} + ${rental_house.price} + ${' VND/day'}"></a>
         </div>
     </div>
 </div>

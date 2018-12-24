@@ -17,6 +17,7 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
+<h1>Danh sach Order cua toi</h1>
 <div class="container">
     <table class="table">
         <tr style="font-weight: bold; text-align: center;">
@@ -25,15 +26,19 @@
             <td>Ngay thue</td>
             <td>Ngay tra</td>
             <td>Gia thue</td>
+            <td>Tai Khoan Order</td>
+            <td>Chu Nha</td>
             <td>Status</td>
             <td>Huy Order</td>
         </tr>
-        <tr th:each="order: ${myOrders}">
+        <tr th:each="order: ${myOrders}" th:if="${order.user_id.username} == ${#request.userPrincipal.getName()}">
             <td th:text="${order.id}"></td>
             <td><a th:href="@{/house/detail/__${order.rental_house_id.id}__}" th:text="${order.rental_house_id.title}"></a></td>
             <td th:text="${order.date_begin}"></td>
             <td th:text="${order.date_end}"></td>
             <td th:text="${order.price}"></td>
+            <td><a th:href="@{/user/__${order.user_id.username}__}" th:text="${order.user_id.username}"></a></td>
+            <td><a th:href="@{/user/__${order.rental_house_id.user.username}__}" th:text="${order.rental_house_id.user.username}"></a></td>
             <td>Pending</td>
             <td><a th:href="@{/order/destroy_order/__${order.id}__}" onclick="return confirm('Would you like to cancel the order')">Huy Order</a></td>
         </tr>
