@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/post")
 public class HostRentalHouseController extends GetIdUserController {
     public static String uploadDirectory = System.getProperty("user.dir") + "/src/main/resources/static/image";
@@ -62,10 +62,11 @@ public class HostRentalHouseController extends GetIdUserController {
     }
 
     @GetMapping("/view-post/{id}")
-    public String viewPostRent(@PathVariable("id") int id, Model model) {
+    public ModelAndView viewPostRent(@PathVariable("id") int id) {
         RentalHouse rentalHouse = this.postRentService.findById(id);
-        model.addAttribute("postRent", rentalHouse);
-        return "/host_rental_house/view-post";
+        ModelAndView modelAndView = new ModelAndView("/host_rental_house/view-post");
+        modelAndView.addObject("postRent", rentalHouse);
+        return modelAndView;
     }
 
     @GetMapping("/delete-post-rent/{id}")

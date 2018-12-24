@@ -12,8 +12,8 @@
 <div class="container">
     <div th:replace="fragments/header :: header"></div>
     <h2 th:utext="${postRent.title}"></h2>
-    Category: <a th:href="@{/post/__${postRent.category.getName()}__}" th:utext="${postRent.category.getName()}"></a><br>
-    User: <a th:href="@{/__${postRent.user.getUsername()}__}" th:utext="${postRent.user.getUsername()}"></a><br>
+    Category: <a th:href="@{/category/__${postRent.category.id}__/__${postRent.category.getName()}__}" th:utext="${postRent.category.getName()}"></a><br>
+    User: <a th:href="@{/user/__${postRent.user.getUsername()}__}" th:utext="${postRent.user.getUsername()}"></a><br>
 
     <div th:utext="${postRent.description}"></div>
     <div th:replace="fragments/footer :: footer"></div>

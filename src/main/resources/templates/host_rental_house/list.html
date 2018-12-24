@@ -15,17 +15,60 @@
 <div th:if="${message}">
     <p th:text="${message}"></p>
 </div>
-<a href="/post/add-post-rent">add post</a><br>
-<th:block th:each="post : ${postRents}">
-    <p th:text="${post.getImages().size()}"></p>
-    <a th:href="@{/post/view-post/__${post.id}__}" th:text="${post.title}"></a> <br>
-    <th:block th:each="img : ${post.getImages()}">
-        <img th:src="@{/__${img.getLink()}__}" th:alt="${img.getName()}" width="80px" height="80px" />
-    </th:block>
-    <a th:href="@{/post/edit-post-rent/__${post.id}__}">Edit</a> |
-    <a th:href="@{/post/delete-post-rent/__${post.id}__}" onclick="return confirm('delete now?')">Delete</a>
-</th:block>
+<div class="container row">
 
+    <div class="col-sm-9">
+        <table class="table table-bordered"  >
+            <thead>
+            <tr>
+                <th width="150px">Title</th>
+                <th width="100px">Image</th>
+                <th>Amount images</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody  th:each="post : ${postRents}" >
+                <tr th:each="img : ${post.getImages()}">
+                    <td><a th:href="@{/post/view-post/__${post.id}__}" th:text="${post.title}"></a></td>
+                    <td><img th:src="@{/__${img.getLink()}__}" th:alt="${img.getName()}" width="100px" height="100px" /></td>
+                    <td th:text="${post.getImages().size()}"></td>
+                    <td><a th:href="@{/post/edit-post-rent/__${post.id}__}">Edit</a></td>
+                    <td><a th:href="@{/post/delete-post-rent/__${post.id}__}" onclick="return confirm('delete now?')">Delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <aside class="col-sm-3">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form>
+                    <input placeholder="from" class="form-control" name="price"/>
+                    <br/>
+                    <input type="input" placeholder="to" class="form-control">
+                    <br/>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class = "glyphicon glyphicon-th-list"></span>
+                <strong>Chủng Loại</strong>
+            </div>
+            <div class="list-group">
+                <a href="#" class="list-group-item">Căn hộ/Chung cư</a>
+                <a href="#" class="list-group-item">Nhà ở</a>
+                <a href="#" class="list-group-item">Đất</a>
+                <a href="#" class="list-group-item">Văn phòng, Mặt bằng kinh doanh</a>
+                <a href="#" class="list-group-item">Phòng trọ</a>
+            </div>
+        </div>
+    </aside>
+
+</div>
 <!--footer-->
 <div th:replace="fragments/footer :: footer"></div>
 </body>

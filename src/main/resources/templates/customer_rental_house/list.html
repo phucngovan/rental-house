@@ -12,8 +12,7 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script src="https://maxcdn.bootstrapcdn.com/font-awesome/3.3.7/css/font-awesome.min.css"></script>
-    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
     <title>News Rent</title>
 </head>
 <body>
@@ -49,7 +48,11 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form>
-                        <input placeholder="Search" class="form-control" name="price"/>
+                        <input placeholder="from" class="form-control" name="price"/>
+                        <br/>
+                        <input type="input" placeholder="to" class="form-control">
+                        <br/>
+                        <button type="submit" class="btn btn-primary">Search</button>
                     </form>
                 </div>
             </div>

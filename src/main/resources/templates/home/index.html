@@ -214,7 +214,7 @@
                     </div>
 
                     <div class="item"  th:each="cate : ${categories}">
-                        <div class="col-xs-12 col-sm-6 col-md-2" >
+                        <div th:if="${cate.getPosts().size()} > 0" class="col-xs-12 col-sm-6 col-md-2" >
                             <a th:href="@{/category/__${cate.id}__/__${cate.name}__}">
                                 <img th:if="${cate.getPosts()[0].getImages().size()} > 0" th:src="@{/__${cate.getPosts()[0].getImages()[0].getLink()}__}" width="180" height="200"></a>
                                 <img th:if="${cate.getPosts()[0].getImages().size()} <= 0" th:src="@{/image/151164737.jpg}" width="180" height="200"></a>
