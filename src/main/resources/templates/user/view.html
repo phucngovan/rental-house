@@ -10,58 +10,46 @@
     <!--Latest compiled and minified JavaScript -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 </head>
+<body>
+<div th:replace="fragments/header :: header"></div>
 <br>
-<h1 class="text-center">List user</h1>
 <div class="container">
-    <form>
-        <div class="col-md-6">
-            <form class="search-form">
-                <tr>
-                    <td><input class="form-control" value="name" name="s" type="text"></td>
-                    <!--<td> <input type="submit" value="Click"></td>-->
-                    <td>
-                        <button class="btn btn-link search-btn"><i class="glyphicon glyphicon-search"></i>
-                        </button>
-                    </td>
-                </tr>
-            </form>
-        </div>
-    </form>
-    </br>
-    <table border="1" class="table table-striped">
+    <div class="col-md-6">
+    <h1 class="text-center">My view user <b th:text="${user.username}"></b></h1>
+    <table class="table table-striped">
         <tr>
-            <td>ID</td>
-            <td>Password</td>
             <td>UserName</td>
-            <td>Email</td>
-            <td>Phone</td>
-            <td>Age</td>
-            <td>Address</td>
-            <td>Gender</td>
-            <td>Delete</td>
-            <td>Edit</td>
+            <td th:text="${user.username}"></td>
         </tr>
-        <th:block th:each="user: ${users}">
-            <tr>
-                <td th:text="${user.id}"></td>
-                <td th:text="${user.password}"></td>
-                <td th:text="${user.username}"></td>
-                <td th:text="${user.email}"></td>
-                <td th:text="${user.phone}"></td>
-                <td th:text="${user.age}"></td>
-                <td th:text="${user.address}"></td>
-                <td th:text="${user.gender} ? 'nam' : 'nu'" ></td>
-                <td><a type="button" class="btn btn-info" th:href="@{user/delete/__${user.id}__}">Delete</a></td>
-                <td><a type="button" class="btn btn-info" th:href="@{user/edit/__${user.id}__}">Edit</a></td>
-            </tr>
-        </th:block>
+        <tr>
+            <td>Email</td>
+            <td th:text="${user.email}"></td>
+        </tr>
+        <tr>
+            <td>Phone</td>
+            <td th:text="${user.phone}"></td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td th:text="${user.age}"></td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td th:text="${user.address}"></td>
+        </tr>
+        <tr>
+            <td>Gender</td>
+            <td th:text="${user.gender} ? 'nam' : 'nu'"></td>
+        </tr>
     </table>
-    <div>
-        <a th:href="@{'/'(page=${users.number - 1})}" th:if="${users.hasPrevious()}">Previous</a>
-        <span th:text="${users.number + 1}"></span>/<span th:text="${users.totalPages}"></span>
-        <a th:href="@{'/'(page=${users.number + 1})}" th:if="${users.hasNext()}">Next</a>
+    </div>
+    <div class="col-md-6">
+        <h2>List Rent House <b th:text="${user.username}"></b></h2>
+        <div th:each="post : ${user.getPosts()}">
+            <p><a th:href="@{/house/detail/__${post.id}__}" th:text="${post.title}"></a></p>
+        </div>
     </div>
 </div>
-
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

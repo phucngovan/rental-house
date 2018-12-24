@@ -11,6 +11,7 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
 <h1 class="text-center">Register Account</h1>
 <th:block th:if="${message}">
     <h2 th:text="${message}"></h2>
@@ -65,5 +66,6 @@
     </form>
     <a th:href="@{/}">Back to Home</a>
 </div>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

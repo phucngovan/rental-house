@@ -24,7 +24,12 @@
         <article class="col-sm-9">
                 <div class="news " th:each="house: ${houses}" style="height: auto">
                     <div class="img ">
-                        <img th:src="@{/image/nha.jpg}" class="picture" width="100px" height="100px">
+                        <div th:if="${house.images.size()} > 0">
+                            <img th:src="@{/__${house.images[0].link}__}" class="picture" width="100px" height="100px">
+                        </div>
+                        <div th:if="${house.images.size()} <= 0">
+                            <img th:src="@{/image/ah-cho.jpg}" class="picture" width="100px" height="100px">
+                        </div>
                     </div>
                     <div class="txt ">
                         <p><a th:href="@{/house/detail/__${house.id}__}"><span th:text="${house.title}"></span></a></p>

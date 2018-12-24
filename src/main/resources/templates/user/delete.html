@@ -5,6 +5,7 @@
     <title>Delete</title>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
 <th:block th:if="${message}">
     <p th:text="${message}"></p>
 </th:block>
@@ -44,5 +45,6 @@
     </table>
 </form>
 <a th:href="@{/user}">Back to View</a>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

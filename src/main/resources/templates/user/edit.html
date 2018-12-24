@@ -11,6 +11,7 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
 <h1 class="text-center">Edit User</h1>
 <th:block th:if="${message}">
     <h2 style="text-align: center" th:text="${message}"></h2>
@@ -72,5 +73,6 @@
     </form>
     <a th:href="@{/user}">Back to View</a>
 </div>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

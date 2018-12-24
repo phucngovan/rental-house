@@ -4,21 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <title>View</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <br>
 <div class="container">
+    <div th:replace="fragments/header :: header"></div>
     <h2>Welcome : <span th:text="${#request.userPrincipal.name}"></span></h2>
     <a href="/logout">Logout</a>
     <h1 class="text-center">List user</h1>
-    <div class="col-md-6">
+    <div class="col-md-12">
         <form class="search-form">
+            <div class="col-md-6">
                 <input class="form-control" style="float: left" placeholder="search username" name="s" type="text">
+            </div>
+            <div class="col-md-6">
                 <button type="submit" class="btn btn-info search-btn">SEARCH
                     <span class="glyphicon glyphicon-search"></span></button>
+            </div>
         </form>
     </div>
+    <br><br>
     <table border="1" class="table table-striped">
         <tr style="font-weight: bold">
             <td>ID User</td>
@@ -41,7 +48,7 @@
                 <td th:text="${user.address}"></td>
                 <td th:each="role : ${user.roles}" th:text="${role.id} == 1 ? 'ADMIN' : 'MEMBER'"></td>
                 <td><a type="button" class="btn btn-info" th:href="@{/user/edit/__${user.id}__}">Edit</a></td>
-                <td><a type="button" class="btn btn-info" th:href="@{/user/delete/__${user.id}__}"
+                <td><a type="button" class="btn btn-info" th:href="@{/user/admin/delete/__${user.id}__}"
                        onclick="return confirm('Do you delete user?')">Delete</a></td>
             </tr>
         </th:block>
@@ -51,6 +58,7 @@
         <span th:text="${users.number + 1}"></span>/<span th:text="${users.totalPages}"></span>
         <a th:href="@{'/user'(page=${users.number + 1})}" th:if="${users.hasNext()}">Next</a>
     </div>
+    <div th:replace="fragments/footer :: footer"></div>
 </div>
 
 </body>

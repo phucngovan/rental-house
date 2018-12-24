@@ -12,7 +12,7 @@ public class Order {
     private String date_begin;
     private String date_end;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user_id;
 

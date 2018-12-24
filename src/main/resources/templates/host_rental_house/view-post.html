@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>View</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-    <!--Latest compiled and minified JavaScript -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <br>
 <div class="container">
+    <div th:replace="fragments/header :: header"></div>
     <h2 th:utext="${postRent.title}"></h2>
     Category: <a th:href="@{/post/__${postRent.category.getName()}__}" th:utext="${postRent.category.getName()}"></a><br>
     User: <a th:href="@{/__${postRent.user.getUsername()}__}" th:utext="${postRent.user.getUsername()}"></a><br>
 
     <div th:utext="${postRent.description}"></div>
+    <div th:replace="fragments/footer :: footer"></div>
+
 </div>
 
 </body>

@@ -3,6 +3,7 @@ package com.PKHS.airbnb.controller;
 import com.PKHS.airbnb.model.Role;
 import com.PKHS.airbnb.model.User;
 import com.PKHS.airbnb.repository.RoleRepository;
+import com.PKHS.airbnb.service.CustomerRentalHouseService;
 import com.PKHS.airbnb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,10 +20,32 @@ import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
 public class LoginController {
+
+    //get id user login
+    @ModelAttribute("myName")
+    public Integer listUser(Principal principal) {
+        if(principal != null) {
+            String myUser = principal.getName();
+            Iterable<User> users = this.userService.findAll();
+            for (User user : users) {
+                if (myUser.equals(user.getUsername())) {
+                    return user.getId();
+                }
+            }
+        }
+        return null;
+    }
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private CustomerRentalHouseService customerRentalHouseService;
 
     @GetMapping("/test")
     public String test(Model model) {
@@ -34,7 +57,8 @@ public class LoginController {
     }
 
     @GetMapping("/")
-    public String home() {
+    public String home(Model model) {
+        model.addAttribute("rental_houses", this.customerRentalHouseService.findAll());
         return "home/index";
     }
 

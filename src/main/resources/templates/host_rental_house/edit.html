@@ -2,63 +2,114 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add post</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <title>Edit post</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/theme.css}">
+    <!-- include summernote css/js -->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
+    <link rel="stylesheet" th:href="@{/css/theme.css}">
+    <script th:src="@{/css/post_rental_house.js}"></script>
+    <script>
+        function getId() {
+            $(document).ready(function () {
+                //get data rental_house_id
+                $("#user_id").val([[${myName}]]);
+            });
+        }
+        function format_curency(a) {
+            a.value = a.value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+        }
+    </script>
 </head>
 
 <body>
+<div th:replace="fragments/header :: header"></div>
 <div class="container">
-    <form method="post" th:action="@{/post/edit-post-rent}" enctype="multipart/form-data" th:object="${post}">
-
-        <div class="col-sd-6">
+    <form method="post" th:action="@{/post/edit-post-rent}" enctype="multipart/form-data" th:object="${post}"
+          onsubmit="getId();">
+        <div class="col-md-8">
+            <input type="hidden" th:field="*{user}" id="user_id">
             <input type="hidden" th:field="*{id}">
-            <div class="">
-                <label for="title">Title</label>
-                <input type="text" id="title" th:field="*{title}">
-            </div>
-            <div class="">
-                <label for="content">content</label>
-                <textarea name="" id="content" cols="30" rows="10" th:field="*{description}"></textarea>
-            </div>
-            <div>
-                <label>Category</label>
-                <select th:field="*{category}" id="category">
-                    <option value="1">Select Category</option>
-                    <option th:each="cate : ${categories}"
-                            th:value="${cate.getId()}"
-                            th:text="${cate.getName()}"
-                            th:selected="(${cate.id} == *{category.id})"></option>
-                </select>
-            </div>
-
-            <div>
-                <label>User</label>
-                <select th:field="*{user}" id="user">
-                    <option value="1">Select user</option>
-                    <option th:each="u : ${users}"
-                            th:value="${u.getId()}"
-                            th:text="${u.getUsername()}"
-                            th:selected="(${u.id} == *{user.id})"></option>
-                </select>
-            </div>
-            <div class="form-group">
-                <input type="file" name="files" multiple>
-            </div>
-            <div class="">
-                <label>status</label>
-                <input type="radio" name="status" th:field="*{status}" value=true > Con trong
-                <input type="radio" name="status" th:field="*{status}" value=false> Het Phong
+            <div class="col-sd-6">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input class="form-control" type="text" id="title" th:field="*{title}">
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <input type="radio" name="status" th:field="*{status}" value=true> Con trong
+                    <input type="radio" name="status" th:field="*{status}" value=false> Het Phong
+                </div>
+                <div>
+                    <label for="description">content</label>
+                    <textarea name="" id="description" cols="30" rows="10" th:field="*{description}"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select th:field="*{category}" id="category" class="form-control">
+                        <option value="1">Select Category</option>
+                        <option th:each="cate : ${categories}"
+                                th:value="${cate.getId()}"
+                                th:text="${cate.getName()}"
+                                th:selected="(${cate.id} == *{category.id})"></option>
+                    </select>
+                </div>
             </div>
         </div>
 
-        <div class="col-sm-12">
-            <input type="submit" class="btn btn-info" value="Post News">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="price">Price VND/Thang</label>
+                <input class="form-control" type="text" value="" placeholder="gia thue VND/thang" id="price" th:field="*{price}">
+            </div>
+            <div class="form-group">
+                <label for="bedroom">Bedroom</label>
+                <input class="form-control" type="text"  placeholder="So phong ngu" id="bedroom" th:field="*{quantity_bedroom}">
+            </div>
+            <div class="form-group">
+                <label for="toilet">Toilet</label>
+                <input class="form-control" type="text" placeholder="so phong ve sinh" id="toilet" th:field="*{quantity_toilet}">
+            </div>
+            <div class="form-group">
+                <label for="storey">Storey</label>
+                <input class="form-control" type="text" placeholder="so tang" id="storey" th:field="*{quantity_storey}">
+            </div>
+            <div class="form-group">
+                <label for="house_area">House Area</label>
+                <input class="form-control" type="text" placeholder="dien tich" id="house_area" th:field="*{house_area}">
+            </div>
+            <div class="form-group">
+                <label for="featured">Feature Other</label>
+                <input class="form-control" type="text" placeholder="dac tinh khac" id="featured" th:field="*{featured}">
+            </div>
+            <div class="form-group">
+                <label for="province">Province</label>
+                <input class="form-control" type="text" placeholder="Tinh/ thanh pho" id="province" th:field="*{province}">
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input class="form-control" type="text" placeholder="Dia chi cu the" id="address" th:field="*{address}">
+            </div>
+            <div class="form-group">
+                <input class="btn btn-info" type="file" name="files" multiple>
+                <br>
+                <div th:each="a : ${post.getImages()}" style="float: left;">
+                    <img th:src="@{/__${a.link}__}" alt="" height="100px" width="100px">
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </div>
+
+        <div class="form-group col-sm-12">
+            <input class="form-control btn btn-info" type="submit" value="Post News">
         </div>
     </form>
 </div>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

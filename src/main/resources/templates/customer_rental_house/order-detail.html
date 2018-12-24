@@ -10,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
 
 <div class="container">
     <table class="table">
@@ -21,7 +22,8 @@
             <td>username</td>
         </tr>
         <tr>
-            <td><a th:href="@{/house/detail/__${order.rental_house_id.id}__}"><span th:text="${order.rental_house_id.title}"></span></a></td>
+            <td><a th:href="@{/house/detail/__${order.rental_house_id.id}__}"><span
+                    th:text="${order.rental_house_id.title}"></span></a></td>
             <td th:text="${order.date_begin}"></td>
             <td th:text="${order.date_end}"></td>
             <td th:text="${order.price}"></td>
@@ -29,5 +31,7 @@
         </tr>
     </table>
 </div>
+<div th:replace="fragments/footer :: footer"></div>
+
 </body>
 </html>

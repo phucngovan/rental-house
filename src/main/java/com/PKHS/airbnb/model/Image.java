@@ -12,7 +12,7 @@ public class Image {
     private String link;
     private String alt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rental_house_id")
     private RentalHouse post;
 

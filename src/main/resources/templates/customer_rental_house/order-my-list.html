@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List My Order</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        #footer {
+            position:absolute;
+            bottom:0;
+            width:100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <table class="table">
+        <tr style="font-weight: bold; text-align: center;">
+            <td>Ma Order</td>
+            <td>Nha Order</td>
+            <td>Ngay thue</td>
+            <td>Ngay tra</td>
+            <td>Gia thue</td>
+            <td>Status</td>
+            <td>Huy Order</td>
+        </tr>
+        <tr th:each="order: ${myOrders}">
+            <td th:text="${order.id}"></td>
+            <td><a th:href="@{/house/detail/__${order.rental_house_id.id}__}" th:text="${order.rental_house_id.title}"></a></td>
+            <td th:text="${order.date_begin}"></td>
+            <td th:text="${order.date_end}"></td>
+            <td th:text="${order.price}"></td>
+            <td>Pending</td>
+            <td><a th:href="@{/order/destroy_order/__${order.id}__}" onclick="return confirm('Would you like to cancel the order')">Huy Order</a></td>
+        </tr>
+    </table>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

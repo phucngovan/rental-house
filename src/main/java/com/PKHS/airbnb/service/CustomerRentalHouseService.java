@@ -10,6 +10,8 @@ import java.util.Optional;
 public interface CustomerRentalHouseService {
     Page<RentalHouse> findAll(Pageable pageable);
 
+    Iterable<RentalHouse> findAll();
+
     RentalHouse findById(Integer id);
 
     void save(RentalHouse house);

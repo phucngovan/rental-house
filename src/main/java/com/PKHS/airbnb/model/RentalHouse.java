@@ -9,11 +9,11 @@ public class RentalHouse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -175,4 +175,5 @@ public class RentalHouse {
     public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
+
 }

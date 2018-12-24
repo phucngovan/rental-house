@@ -22,6 +22,11 @@ public class CustomerRentalHouseServiceImpl implements CustomerRentalHouseServic
     }
 
     @Override
+    public Iterable<RentalHouse> findAll() {
+        return this.houseRepository.findAll();
+    }
+
+    @Override
     public RentalHouse findById(Integer id) {
         return this.houseRepository.findById(id).orElse(null);
     }

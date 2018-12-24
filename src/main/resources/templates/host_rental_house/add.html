@@ -3,96 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <title>Add post</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/theme.css}">
-    <!-- include libraries(jQuery, bootstrap) -->
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-
     <!-- include summernote css/js -->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
+    <script th:src="@{/css/post_rental_house.js}"></script>
     <script>
-        $(document).ready(function () {
-            $('#description').summernote({
-                height: ($(window).height() - 300),
-                onImageUpload: function (files) {
-                    for (var i = 0; i < files.length; i++) {
-                        $.upload('image', files[i]);
-                    }
-                }
-
+        function getId() {
+            $(document).ready(function () {
+                //get data rental_house_id
+                $("#user_id").val([[${myName}]]);
             });
-            //upload file image in summernote
-            $.upload = function (file) {
-                var out = new FormData();
-                out.append('file', file, file.name);
-
-                $.ajax({
-                    method: 'POST',
-                    url: 'http://localhost:8080/upload/image_summernote',
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    dataType: 'JSON',
-                    data: out,
-                    success: function (r) {
-                        $('#description').summernote('insertImage', r.url);
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.error(textStatus + " " + errorThrown);
-                    }
-                });
-            };
-
-        });
-
+        }
     </script>
-
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
 <div class="container">
-    <h2>Post Rent House</h2>
-    <form method="post" th:action="@{/post/add-post-rent-new}" enctype="multipart/form-data" th:object="${post}">
-        <div class="">
-            <label for="title">Title</label>
-            <input type="text" id="title" th:field="*{title}">
+    <h2 style="color: #b20c0c; font-weight: bold; text-align: center">Post Rent House</h2>
+    <form method="post" th:action="@{/post/add-post-rent-new}" enctype="multipart/form-data" th:object="${post}"
+          onsubmit="getId();">
+        <div class="col-md-8">
+            <input type="hidden" th:field="*{user}" id="user_id">
+            <input type="hidden" th:field="*{status}" value="true">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input class="form-control" type="text" id="title" th:field="*{title}">
+            </div>
+            <div class="form-group">
+                <label for="description">content</label>
+                <textarea class="form-control" id="description" cols="30" rows="10" th:field="*{description}"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select th:field="*{category}" id="category" class="form-control">
+                    <option value="1">Select Category</option>
+                    <option th:each="cate : ${categories}"
+                            th:value="${cate.getId()}"
+                            th:text="${cate.getName()}"></option>
+                </select>
+            </div>
         </div>
-        <div class="">
-            <label for="description">content</label>
-            <textarea name="" id="description" cols="30" rows="10" th:field="*{description}"></textarea>
-        </div>
-        <div>
-            <label>Category</label>
-            <select th:field="*{category}" id="category">
-                <option value="1">Select Category</option>
-                <option th:each="cate : ${categories}"
-                        th:value="${cate.getId()}"
-                        th:text="${cate.getName()}"></option>
-            </select>
-        </div>
-        <div>
-            <label>User</label>
-            <select th:field="*{user}" id="user">
-                <option value="1">Select user</option>
-                <option th:each="user : ${users}"
-                        th:value="${user.getId()}"
-                        th:text="${user.getUsername()}"></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <input type="file" name="files" multiple>
-        </div>
-        <input type="hidden" th:field="*{status}" value="true">
 
-        <div>
-            <input type="submit" class="btn btn-info" value="Post News">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="price">Price VND/Thang</label>
+                <input class="form-control" type="number" placeholder="gia thue VND/thang" id="price" th:field="*{price}">
+            </div>
+            <div class="form-group">
+                <label for="bedroom">Bedroom</label>
+                <input class="form-control" type="number" placeholder="So phong ngu" id="bedroom" th:field="*{quantity_bedroom}">
+            </div>
+            <div class="form-group">
+                <label for="toilet">Toilet</label>
+                <input class="form-control" type="number" placeholder="So phong ve sinh" id="toilet" th:field="*{quantity_toilet}">
+            </div>
+            <div class="form-group">
+                <label for="storey">Storey</label>
+                <input class="form-control" type="number" placeholder="so tang" id="storey" th:field="*{quantity_storey}">
+            </div>
+            <div class="form-group">
+                <label for="house_area">House Area</label>
+                <input class="form-control" type="text" placeholder="dien tich" id="house_area" th:field="*{house_area}">
+            </div>
+            <div class="form-group">
+                <label for="featured">Feature Other</label>
+                <input class="form-control" type="text" placeholder="dac tinh khac" id="featured" th:field="*{featured}">
+            </div>
+            <div class="form-group">
+                <label for="province">Province</label>
+                <input class="form-control" type="text" placeholder="Tinh/ thanh pho" id="province" th:field="*{province}">
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input class="form-control" type="text" placeholder="Dia chi cu the" id="address" th:field="*{address}">
+            </div>
+            <div class="form-group">
+                <input class="btn btn-info" type="file" name="files" multiple>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input class="form-control btn btn-info" type="submit" value="Post News">
         </div>
     </form>
 </div>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

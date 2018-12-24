@@ -13,6 +13,7 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    <script type="text/javascript" th:src="@{/css/get_user_id.js}"></script>
     <script>
         function getId() {
             $(document).ready(function () {
@@ -20,7 +21,6 @@
                 var rental_id = [[${house.id}]];
                 $("#rental_id").val(rental_id);
                 $("#user_id").val([[${myName}]]);
-
             });
         }
 
@@ -57,72 +57,146 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-<div class="container">
-    <div th:object="${house}">
-        <table>
-            <tr>
-                <td>Title:</td>
-                <td th:utext="${house.title}"></td>
-            </tr>
-            <tr>
-                <td>Address:</td>
-                <td th:utext="${house.address}"></td>
-            </tr>
-            <tr>
-                <td>Description</td>
-                <td th:utext="${house.description}"></td>
-            </tr>
-            <tr>
-                <td>Price:</td>
-                <td><span id="price" th:value="${house.price}" th:utext="${house.price} + ${'VND'}"></span></td>
-            </tr>
-        </table>
-    </div>
+<div th:object="${house}">
+    <div class="container">
+        <div class="col-md-12"><h1 style="text-align: center" th:utext="${house.title}"></h1></div>
+        <div th:if="${house.images.size()} > 0" class="col-md-12" style="height: 400px">
+            <div id="myCarousel" class="carousel slide" data-interval="3000" data-ride="carousel">
+                <!-- Carousel indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                </ol>
+                <!-- Carousel items -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <img th:src="@{/__${house.images[0].getLink()}__}" style="width: 100%; height: 400px;"
+                             alt="First Slide">
+                        <div class="carousel-caption">
+                            <h3>First slide label</h3>
+                            <p>Lorem ipsum dolor sit amet...</p>
+                        </div>
+                    </div>
+                    <!--Neu co lon hon 1 anh-->
+                    <div th:if="${house.images.size()} > 1" th:each="image, i: ${house.images}"
+                         class="item">
+                        <img th:src="@{/__${house.images[i.index].getLink()}__}" style="width: 100%; height: 400px;"
+                             alt="Second Slide">
+                        <div class="carousel-caption">
+                            <h3>Second slide label</h3>
+                            <p>Aliquam sit amet gravida nibh, facilisis...</p>
+                        </div>
+                    </div>
 
-    <div>
-        <form class="form-horizontal" method="post" th:action="@{/house/action}" th:object="${order}" onsubmit="getId();">
-            <input type="hidden" th:field="*{rental_house_id}" id="rental_id">
-            <div th:if="${#request.userPrincipal}">
-                <input type="hidden" th:field="*{user_id}" id="user_id" >
+                </div>
+                <!-- Carousel nav -->
+                <a class="carousel-control left" href="#myCarousel" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="carousel-control right" href="#myCarousel" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
             </div>
-            <div class="form-group">
-                <label for="start-date" class="col-sm-2 control-label">Start-date</label>
-                <div class="col-sm-4">
+        </div>
+
+        <br><br>
+        <div class="col-md-9" style="text-align: center;">
+            <span th:utext="${house.description}"></span>
+            <hr>
+            <span>Địa chỉ liên hệ</span>
+            <table class="table" border="1px">
+                <tr>
+                    <td style="width:200px; font-weight: bold; background-color: coral">Province</td>
+                    <td th:text="${house.province}"></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold; background-color: coral">Address detail</td>
+                    <td th:text="${house.address}"></td>
+                </tr>
+            </table>
+            <span>Thong tin chi tiet nha</span>
+            <table class="table" border="1px">
+                <tr style="font-weight: bold; color: white; background-color: blueviolet">
+                    <td>Bedroom</td>
+                    <td>Toilet</td>
+                    <td>Storey</td>
+                    <td>House Area</td>
+                    <td>Featured</td>
+                </tr>
+                <tr>
+                    <td><span style="color: red" th:text="${house.quantity_bedroom}"></span> phòng</td>
+                    <td><span style="color: red" th:text="${house.quantity_toilet}"></span> phòng</td>
+                    <td><span style="color: red" th:text="${house.quantity_storey}"></span> tầng</td>
+                    <td><span style="color: red" th:text="${house.quantity_storey}"></span> mét vuông</td>
+                    <td><span style="color: red" th:text="${house.featured}"></span></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-3">
+            <h3 style="color: red; text-align: center;">Order Rental house</h3>
+            <h4><b>Price: </b> <span style="color: #b20c0c" id="price" th:value="${house.price}"
+                                     th:utext="${house.price} + ${' VND/day'}"></span></h4>
+            <form class="form-horizontal" method="post" th:action="@{/house/action}" th:object="${order}"
+                  onsubmit="getId();">
+                <input type="hidden" th:field="*{rental_house_id}" id="rental_id">
+                <div th:if="${#request.userPrincipal}">
+                    <input type="hidden" th:field="*{user_id}" id="user_id">
+                </div>
+                <div class="form-group">
+                    <label for="start-date">Start date</label>
                     <input class="form-control" id="start-date" name="date" th:field="*{date_begin}"
                            placeholder="MM/DD/YYYY" type="text" autocomplete="off"/>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="end-date" class="col-sm-2 control-label">End-date</label>
-                <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="end-date">End date</label>
                     <input class="form-control" th:field="*{date_end}" id="end-date"
                            name="date" placeholder="MM/DD/YYYY" type="text" autocomplete="off"/>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="price_order" class="col-sm-2 control-label">Total-price</label>
-                <div class="col-sm-4">
-                    <input type="text" th:field="*{price}" id="price_order" class="form-control" readonly="readonly">
+                <div class="form-group">
+                    <label for="price_order">Total price</label>
+                    <input type="text" th:field="*{price}" id="price_order" class="form-control"
+                           readonly="readonly">
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
+                <div class="form-group">
                     <div th:if="${#request.userPrincipal}">
                         <button type="submit" class="btn btn-info">Dang ky thue</button>
                         <button type="reset" class="btn btn-default ">Reset</button>
                     </div>
                 </div>
-            </div>
-        </form>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <div th:if="${#request.userPrincipal} == null">
-                    <button class="btn btn-warning" data-toggle="modal" data-target=".mode">Dang ky thue</button>
+            </form>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div th:if="${#request.userPrincipal} == null">
+                        <button class="btn btn-warning" data-toggle="modal" data-target=".mode">Dang ky thue</button>
+                    </div>
                 </div>
             </div>
+            <br><br><br>
         </div>
-        <br><br><br>
     </div>
+
+</div>
+<div class="container">
+    <div class="col-lg-8 col-sm-6 text-center">
+        <h4>What is on your mind?</h4>
+        <form th:action="@{/house/comment}" method="post" role="form" th:object="${cm}">
+            <div class="input-group">
+                <textarea th:field="*{body}" type="text" class="form-control input-sm chat-input" placeholder="Write your message here..."></textarea>
+            </div>
+            <input type="hidden" th:field="*{rentalHouse}">
+            <div class="input-group">
+                <button type="submit" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-comment"></span>  Comment  </button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+<h2>Comments:</h2>
+
+<!--Comments-->
+<div class="well" th:each="comment: ${comments}">
+    <p th:text="${comment.body}"></p>
+    <p th:if="${#request.userPrincipal}" th:text="${#request.userPrincipal.getName()}"></p>
 </div>
 <div th:replace="fragments/footer :: footer"></div>
 </body>

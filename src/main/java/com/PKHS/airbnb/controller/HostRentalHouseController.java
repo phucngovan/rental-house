@@ -9,6 +9,8 @@ import com.PKHS.airbnb.service.HostRentalHouseService;
 import com.PKHS.airbnb.service.UploadFileService;
 import com.PKHS.airbnb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +23,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/post")
-public class HostRentalHouseController {
+public class HostRentalHouseController extends GetIdUserController {
     public static String uploadDirectory = System.getProperty("user.dir") + "/src/main/resources/static/image";
 
     @Autowired
@@ -84,8 +87,28 @@ public class HostRentalHouseController {
     }
 
     @PostMapping("/edit-post-rent")
-    public String updatePost(@ModelAttribute("post") RentalHouse post,
+    public String updatePost(@RequestParam("files") MultipartFile[] files, @ModelAttribute("post") RentalHouse post,
                              RedirectAttributes attributes) {
+        List<Image> images = new ArrayList<Image>();
+        for (MultipartFile file : files) {
+            Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
+            try {
+                if (!fileNameAndPath.equals("")) {
+                    Files.write(fileNameAndPath, file.getBytes());
+                    String file_name = file.getOriginalFilename();
+                    String file_link = "image/" + file_name;
+                    Image image = new Image(file_name, file_link);
+                    image.setPost(post);
+                    this.uploadFileService.save(image);
+                    images.add(image);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (images.size() > 0) {
+            post.setImages(images);
+        }
         this.postRentService.save(post);
         attributes.addFlashAttribute("message", "Update post successful");
         return "redirect:/post";
@@ -100,13 +123,14 @@ public class HostRentalHouseController {
 
     @PostMapping("/add-post-rent-new")
     public String savePost(@RequestParam("files") MultipartFile[] files,
-                           @ModelAttribute("post") RentalHouse post,
+                           @ModelAttribute("post") RentalHouse post, @ModelAttribute("myName") Integer user_id,
                            RedirectAttributes attributes) {
         List<Image> images = new ArrayList<Image>();
+        User user = this.userService.findById(user_id);
         for (MultipartFile file : files) {
             Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
             try {
-                if (!fileNameAndPath.equals("")){
+                if (!fileNameAndPath.equals("")) {
                     Files.write(fileNameAndPath, file.getBytes());
                     String file_name = file.getOriginalFilename();
                     String file_link = "image/" + file_name;
@@ -119,9 +143,10 @@ public class HostRentalHouseController {
             }
             System.out.println(file.getOriginalFilename());
         }
-        if (images.size() >0){
+        if (images.size() > 0) {
             post.setImages(images);
         }
+        post.setUser(user);
         this.postRentService.save(post);
         attributes.addFlashAttribute("message", "Create post successfull");
         return "redirect:/post";

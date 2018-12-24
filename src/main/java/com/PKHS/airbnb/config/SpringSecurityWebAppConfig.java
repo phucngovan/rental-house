@@ -1,6 +1,7 @@
 package com.PKHS.airbnb.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -41,15 +42,16 @@ public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/register").permitAll()
-                .antMatchers("/user").hasRole("ADMIN")
+                .antMatchers("/user/admin/**").hasRole("ADMIN")
                 .antMatchers("/post/**").authenticated()
+                .antMatchers("/order/**").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .successHandler(successHandler())
-                .failureUrl("/")
+                .failureUrl("/403")
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/403");
