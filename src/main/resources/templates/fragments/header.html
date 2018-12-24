@@ -68,7 +68,7 @@
                             <span th:text="${#request.userPrincipal.getName()}"></span><span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a th:href="@{/user/__${#request.userPrincipal.getName()}__}">Thông tin tài khoản</a></li>
-                            <li><a href="/post/my_post">Tin đã đăng</a></li>
+                            <li><a href="/post">Tin đã đăng</a></li>
                             <li><a href="/order/my_order">Order cua ban</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="/logout">Đăng xuất</a></li>
