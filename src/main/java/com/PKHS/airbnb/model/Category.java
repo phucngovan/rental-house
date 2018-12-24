@@ -13,7 +13,7 @@ public class Category {
     private Integer id;
     private String name;
 
-    @OneToMany(targetEntity = RentalHouse.class)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
     private List<RentalHouse> posts;
 
     public Category() {

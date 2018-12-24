@@ -1,8 +1,10 @@
 package com.PKHS.airbnb.controller;
 
+import com.PKHS.airbnb.model.Category;
 import com.PKHS.airbnb.model.Role;
 import com.PKHS.airbnb.model.User;
 import com.PKHS.airbnb.repository.RoleRepository;
+import com.PKHS.airbnb.service.CategoryService;
 import com.PKHS.airbnb.service.CustomerRentalHouseService;
 import com.PKHS.airbnb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,22 +26,10 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-public class LoginController {
+public class LoginController extends GetIdUserController{
 
-    //get id user login
-    @ModelAttribute("myName")
-    public Integer listUser(Principal principal) {
-        if(principal != null) {
-            String myUser = principal.getName();
-            Iterable<User> users = this.userService.findAll();
-            for (User user : users) {
-                if (myUser.equals(user.getUsername())) {
-                    return user.getId();
-                }
-            }
-        }
-        return null;
-    }
+    @Autowired
+    private CategoryService categoryService;
 
     @Autowired
     private UserService userService;
@@ -55,10 +45,15 @@ public class LoginController {
         System.out.println(userDetails.getAuthorities());
         return "errors/test";
     }
-
+    @GetMapping("/header")
+    public String my_header(@ModelAttribute("myName") Integer id, Model model) {
+        model.addAttribute("myName", id);
+        return "fragments/header";
+    }
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("rental_houses", this.customerRentalHouseService.findAll());
+        model.addAttribute("categories", this.categoryService.findAll());
         return "home/index";
     }
 

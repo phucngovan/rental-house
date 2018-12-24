@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/font-awesome/3.3.7/css/font-awesome.min.css"></script>
+</head>
+<body class="container">
+<div th:replace="fragments/header :: header"></div>
+<div class="col-md-3">
+    <table class="table">
+        <tr>
+            <td><h3><b>List Category</b></h3></td>
+        </tr>
+        <tr th:each="cate : ${categories}">
+            <td><a th:href="@{/category/__${cate.id}__/__${cate.name}__}" th:text="${cate.getName()}"></a></td>
+        </tr>
+    </table>
+</div>
+<div class="col-md-9">
+    <h2 th:text="${category.getName()}"></h2>
+    <table class="table">
+        <tr th:each="postInCate : ${category.getPosts()}">
+            <td th:if="${postInCate.getImages().size()} > 0"><img th:src="@{/__${postInCate.getImages()[0].getLink()}__}" alt="" width="150px" height="150px"></td>
+            <td th:if="${postInCate.getImages().size()} <= 0"><img th:src="@{/image/house1.jpg}" alt="" width="150px" height="150px"></td>
+            <td><h2><a th:href="@{/house/detail/__${postInCate.id}__}" th:text="${postInCate.getTitle()}"></a></h2><br>
+                <h4 th:utext="${'<b>Price: </b>' + postInCate.price + ' VND/day'}"></h4></td>
+        </tr>
+    </table>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
@@ -53,17 +54,18 @@ public class HostRentalHouseController extends GetIdUserController {
     }
 
     @GetMapping
-    public String listPostRents(Model model) {
+    public ModelAndView listPostRents() {
         Iterable<RentalHouse> postRents = this.postRentService.findAll();
-        model.addAttribute("postRents", postRents);
-        return "host_rental_house/list";
+        ModelAndView modelAndView = new ModelAndView("host_rental_house/list");
+        modelAndView.addObject("postRents", postRents);
+        return modelAndView;
     }
 
     @GetMapping("/view-post/{id}")
     public String viewPostRent(@PathVariable("id") int id, Model model) {
         RentalHouse rentalHouse = this.postRentService.findById(id);
         model.addAttribute("postRent", rentalHouse);
-        return "host_rental_house/view-post";
+        return "/host_rental_house/view-post";
     }
 
     @GetMapping("/delete-post-rent/{id}")
@@ -115,14 +117,15 @@ public class HostRentalHouseController extends GetIdUserController {
     }
 
     @GetMapping("/add-post-rent")
-    public String addPost(Model model) {
+    public ModelAndView addPost() {
         RentalHouse post = new RentalHouse();
-        model.addAttribute("post", post);
-        return "host_rental_house/add";
+        ModelAndView modelAndView = new ModelAndView("host_rental_house/add");
+        modelAndView.addObject("post", post);
+        return modelAndView;
     }
 
     @PostMapping("/add-post-rent-new")
-    public String savePost(@RequestParam("files") MultipartFile[] files,
+    public ModelAndView savePost(@RequestParam("files") MultipartFile[] files,
                            @ModelAttribute("post") RentalHouse post, @ModelAttribute("myName") Integer user_id,
                            RedirectAttributes attributes) {
         List<Image> images = new ArrayList<Image>();
@@ -149,6 +152,7 @@ public class HostRentalHouseController extends GetIdUserController {
         post.setUser(user);
         this.postRentService.save(post);
         attributes.addFlashAttribute("message", "Create post successfull");
-        return "redirect:/post";
+        ModelAndView modelAndView = new ModelAndView("redirect:/post");
+        return modelAndView;
     }
 }

@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Order list</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
@@ -17,7 +20,7 @@
         <tr th:each="order : ${orders}">
             <td th:text="${order.id}"></td>
             <td th:text="${order.rental_house_id.title}"></td>
-            <td><a th:href="@{/order_detail/__${order.id}__}">Xem Chi Tiet</a></td>
+            <td><a th:href="@{/order/order_detail/__${order.id}__}">Xem Chi Tiet</a></td>
         </tr>
     </table>
 </div>

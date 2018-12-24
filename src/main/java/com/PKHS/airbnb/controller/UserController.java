@@ -23,7 +23,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("user")
-public class UserController {
+public class UserController extends GetIdUserController{
     @Autowired
     private RoleRepository roleRepository;
 
@@ -57,9 +57,10 @@ public class UserController {
     public String viewDelete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
         User user = this.userService.findById(id);
         this.userService.remove(id);
-        attributes.addFlashAttribute("message", "Delete User '"+user.getUsername()+"' successful");
+        attributes.addFlashAttribute("message", "Delete User '" + user.getUsername() + "' successful");
         return "redirect:/user/admin/manager_user";
     }
+
     @GetMapping("/edit/{id}")
     public ModelAndView viewEdit(@PathVariable("id") Integer id) {
         ModelAndView modelAndView = new ModelAndView("user/edit");
@@ -88,14 +89,14 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ModelAndView addUser (@Valid @ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes attributes) {
+    public ModelAndView addUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes attributes) {
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         ModelAndView modelAndView = new ModelAndView("user/create");
-        if (bindingResult.hasFieldErrors()){
+        if (bindingResult.hasFieldErrors()) {
             return modelAndView;
-        }else {
+        } else {
             userService.save(user);
-            modelAndView = new ModelAndView("redirect:/user");
+            modelAndView = new ModelAndView("redirect:/user/" + user.getId() + "/" + user.getUsername());
             attributes.addFlashAttribute("message", "New user created successfully");
             modelAndView.addObject("user", new User());
             return modelAndView;

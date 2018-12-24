@@ -17,7 +17,7 @@ public class RentalHouse {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(targetEntity = Order.class)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rental_house_id")
     private List<Order> orders;
 
     @OneToMany(targetEntity = Image.class)

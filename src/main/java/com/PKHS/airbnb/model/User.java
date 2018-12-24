@@ -12,10 +12,10 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @OneToMany(targetEntity = RentalHouse.class)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<RentalHouse> posts;
 
-    @OneToMany(targetEntity = Order.class)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user_id")
     private List<Order> orders;
 
     @ManyToMany
