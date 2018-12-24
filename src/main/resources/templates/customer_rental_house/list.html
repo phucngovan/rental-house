@@ -2,45 +2,47 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
+    <style>
+        #footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: auto;
+        }
+    </style>
     <title>News Rent</title>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
 
 <div class="container" style="height: auto">
-    <div class = "row">
+    <div class="row">
         <article class="col-sm-9">
-                <div class="news " th:each="house: ${houses}" style="height: auto">
-                    <div class="img ">
-                        <div th:if="${house.images.size()} > 0">
-                            <img th:src="@{/__${house.images[0].link}__}" class="picture" width="100px" height="100px">
-                        </div>
-                        <div th:if="${house.images.size()} <= 0">
-                            <img th:src="@{/image/ah-cho.jpg}" class="picture" width="100px" height="100px">
-                        </div>
+            <div class="news " th:each="house: ${houses}" style="height: auto">
+                <div class="img ">
+                    <div th:if="${house.images.size()} > 0">
+                        <img th:src="@{/__${house.images[0].link}__}" class="picture" width="100px" height="100px">
                     </div>
-                    <div class="txt ">
-                        <p><a th:href="@{/house/detail/__${house.id}__}"><span th:text="${house.title}"></span></a></p>
-                        <p th:text="${house.price}"></p>
+                    <div th:if="${house.images.size()} <= 0">
+                        <img th:src="@{/image/ah-cho.jpg}" class="picture" width="100px" height="100px">
                     </div>
-                   <div>
-                       <br/>
-                       <br/>
-                       <br/>
-                       <hr/>
-                   </div>
                 </div>
+                <div class="txt ">
+                    <p><a th:href="@{/house/detail/__${house.id}__}"><span th:text="${house.title}"></span></a></p>
+                    <p th:text="${house.price}"></p>
+                </div>
+                <div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <hr/>
+                </div>
+            </div>
         </article>
 
 
@@ -59,7 +61,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span class = "glyphicon glyphicon-th-list"></span>
+                    <span class="glyphicon glyphicon-th-list"></span>
                     <strong>Chủng Loại</strong>
                 </div>
                 <div class="list-group">
