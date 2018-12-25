@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
     <!--Latest compiled and minified JavaScript -->
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
@@ -19,14 +20,12 @@
 <div class="container">
     <form th:action="@{/user/edit}" th:object="${user}" method="post">
         <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{password}">
+
         <table class="table">
             <tr>
                 <td>Username:</td>
                 <td><input class="form-control" type="text" th:field="*{username}" readonly></td>
-            </tr>
-            <tr>
-                <td>Password:</td>
-                <td><input class="form-control" type="password" th:field="*{password}"></td>
             </tr>
             <tr>
                 <td>Email:</td>

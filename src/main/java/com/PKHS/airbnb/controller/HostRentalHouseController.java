@@ -1,13 +1,7 @@
 package com.PKHS.airbnb.controller;
 
-import com.PKHS.airbnb.model.Category;
-import com.PKHS.airbnb.model.Image;
-import com.PKHS.airbnb.model.RentalHouse;
-import com.PKHS.airbnb.model.User;
-import com.PKHS.airbnb.service.CategoryService;
-import com.PKHS.airbnb.service.HostRentalHouseService;
-import com.PKHS.airbnb.service.UploadFileService;
-import com.PKHS.airbnb.service.UserService;
+import com.PKHS.airbnb.model.*;
+import com.PKHS.airbnb.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +30,9 @@ public class HostRentalHouseController extends GetIdUserController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private OrderService orderService;
 
     @Autowired
     private UserService userService;
@@ -71,6 +68,7 @@ public class HostRentalHouseController extends GetIdUserController {
 
     @GetMapping("/delete-post-rent/{id}")
     public String deletePost(@PathVariable("id") int id, RedirectAttributes attributes) {
+        RentalHouse post = this.postRentService.findById(id);
         if (this.postRentService.findById(id) != null) {
             this.postRentService.remove(id);
             attributes.addFlashAttribute("message", "Delete Successful");
@@ -127,8 +125,8 @@ public class HostRentalHouseController extends GetIdUserController {
 
     @PostMapping("/add-post-rent-new")
     public ModelAndView savePost(@RequestParam("files") MultipartFile[] files,
-                           @ModelAttribute("post") RentalHouse post, @ModelAttribute("myName") Integer user_id,
-                           RedirectAttributes attributes) {
+                                 @ModelAttribute("post") RentalHouse post, @ModelAttribute("myName") Integer user_id,
+                                 RedirectAttributes attributes) {
         List<Image> images = new ArrayList<Image>();
         User user = this.userService.findById(user_id);
         for (MultipartFile file : files) {

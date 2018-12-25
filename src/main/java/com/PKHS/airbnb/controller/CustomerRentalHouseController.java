@@ -74,7 +74,7 @@ public class CustomerRentalHouseController extends GetIdUserController{
     }
 
 
-    @GetMapping("/order/order_list")
+    @GetMapping("/user/admin/manager-order-list")
     public String order_list(Model model) {
         model.addAttribute("orders", this.orderService.findAll());
         return "customer_rental_house/order-list";

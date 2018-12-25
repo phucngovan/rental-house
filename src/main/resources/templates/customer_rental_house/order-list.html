@@ -6,14 +6,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <style>
-        #footer {
-            position:absolute;
-            bottom:0;
-            width:100%;
-            height: auto;
-        }
-    </style>
+
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
@@ -22,13 +15,23 @@
     <table class="table">
         <tr style="font-weight: bold">
             <td>Ma don hang</td>
-            <td>Content</td>
-            <td>Xem chi tiet</td>
+            <td>Title Rental House</td>
+            <td>Account order</td>
+            <td>Host house</td>
+            <td>Browse Orders</td>
+            <td>Delete</td>
         </tr>
         <tr th:each="order : ${orders}">
             <td th:text="${order.id}"></td>
-            <td th:text="${order.rental_house_id.title}"></td>
-            <td><a th:href="@{/order/order_detail/__${order.id}__}">Xem Chi Tiet</a></td>
+            <td><a th:href="@{/order/order_detail/__${order.id}__}" th:text="${order.rental_house_id.title}"></a></td>
+            <td><a th:href="@{/user/__${order.user_id.getUsername()}__}" th:text="${order.user_id.getUsername()}"></a></td>
+            <td><a th:href="@{/user/__${order.rental_house_id.user.getUsername()}__}" th:text="${order.rental_house_id.user.getUsername()}"></a></td>
+            <td><select class="form-control" name="" id="">
+                <option value="0">Pending</option>
+                <option value="1">Duyet</option>
+                <option value="2">Bo qua</option>
+            </select></td>
+            <td><a type="button" class="btn btn-info" th:href="@{/order/destroy_order/__${order.id}__}">Delete</a></td>
         </tr>
     </table>
 </div>

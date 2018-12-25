@@ -11,7 +11,7 @@ public class Order {
     private Integer price;
     private String date_begin;
     private String date_end;
-
+    private int status;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user_id;
@@ -69,5 +69,13 @@ public class Order {
 
     public void setRental_house_id(RentalHouse rental_house_id) {
         this.rental_house_id = rental_house_id;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

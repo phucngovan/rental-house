@@ -14,14 +14,7 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
     <script type="text/javascript" th:src="@{/css/get_user_id.js}"></script>
-    <style>
-        #footer {
-            position:absolute;
-            bottom:0;
-            width:100%;
-            height: auto;
-        }
-    </style>
+
     <script>
         function getId() {
             $(document).ready(function () {
@@ -70,7 +63,8 @@
         <div class="col-md-12"><h1 style="text-align: center" th:utext="${house.title}"></h1>
             <th:block th:if="${#request.userPrincipal}">
             <div th:if="${house.user.username} == ${#request.userPrincipal.getName()}">
-                <a th:href="@{/post/edit-post-rent/__${house.id}__}">Edit Post Rental House</a>
+                <a type="button" th:href="@{/post/edit-post-rent/__${house.id}__}">Edit Post Rental House</a>
+                <a type="button" th:href="@{/post/delete-post-rent/__${house.id}__}">Delete Post</a>
             </div>
             </th:block>
         </div>

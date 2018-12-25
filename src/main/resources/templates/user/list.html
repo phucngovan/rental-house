@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 <br>
 <div class="container">
@@ -41,7 +42,7 @@
         <th:block th:each="user: ${users}">
             <tr>
                 <td th:text="${user.id}"></td>
-                <td th:text="${user.username}"></td>
+                <td><a th:href="@{/user/__${user.username}__}"  th:text="${user.username}"></a></td>
                 <td th:text="${user.email}"></td>
                 <td th:text="${user.phone}"></td>
                 <td th:text="${user.age}"></td>
